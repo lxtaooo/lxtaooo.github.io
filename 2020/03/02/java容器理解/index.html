@@ -88,7 +88,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://q61qoc5o5.bkt.clouddn.com/%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9B%BE.gif">
 <meta property="article:published_time" content="2020-03-02T06:34:22.548Z">
-<meta property="article:modified_time" content="2020-03-02T07:32:53.744Z">
+<meta property="article:modified_time" content="2020-03-03T10:26:40.631Z">
 <meta property="article:author" content="lxtaooo">
 <meta property="article:tag" content="java">
 <meta name="twitter:card" content="summary">
@@ -362,7 +362,7 @@
 <ul>
 <li><p><strong>List 有序,可重复</strong> </p>
 <ul>
-<li>ArrayList<br>底层数据结构是<strong><em>数组</em></strong>，查询快，增删慢。<br>线程不安全，效率高</li>
+<li>ArrayList<br>底层数据结构是<strong><em>Object数组</em></strong>，查询快，增删慢。<br>线程不安全，效率高</li>
 <li>Vector<br>底层数据结构是<strong><em>数组</em></strong>，查询快，增删慢。<br>线程安全，效率低</li>
 <li>LinkedList<br>底层数据结构是<strong><em>链表</em></strong>，查询慢，增删快。<br>线程不安全，效率高</li>
 </ul>
@@ -392,6 +392,31 @@
 <li><p>TreeMap（有序）</p>
 </li>
 </ul>
+</li>
+</ul>
+<h3 id="ArrayList源码分析"><a href="#ArrayList源码分析" class="headerlink" title="ArrayList源码分析"></a>ArrayList源码分析</h3><ul>
+<li><p>方法字段</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ArrayList</span>&lt;<span class="title">E</span>&gt; <span class="keyword">extends</span> <span class="title">AbstractList</span>&lt;<span class="title">E</span>&gt;</span></span><br><span class="line"><span class="class">        <span class="keyword">implements</span> <span class="title">List</span>&lt;<span class="title">E</span>&gt;, <span class="title">RandomAccess</span>, <span class="title">Cloneable</span>, <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">8683452581122892189L</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 默认初始容量为10，Vector也是10</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> DEFAULT_CAPACITY = <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 空数组，当指定ArrayList数量为0时，返回这个数组</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Object[] EMPTY_ELEMENTDATA = &#123;&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">	-* 默认的空对象数组</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Object[] DEFAULTCAPACITY_EMPTY_ELEMENTDATA = &#123;&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 存储ArrayList元素的数组缓冲区。</span></span><br><span class="line"><span class="comment">	* ArrayList的容量是这个数组缓冲区的长度。</span></span><br><span class="line"><span class="comment">	* 当该数组为DEFAULTCAPACITY_EMPTY_ELEMENTDATA时，</span></span><br><span class="line"><span class="comment">	* ArrayList的容量将在添加第一个元素时扩展为DEFAULT_CAPACITY，也就是10。</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="comment">//内部封装的数组</span></span><br><span class="line">    <span class="keyword">transient</span> Object[] elementData; </span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * ArrayList中的元素个数</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> size;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>构造方法</p>
+<p>ArrayList提供三种构造方法：</p>
+<p>1、无参构造</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 提供一个容量为10的数组  </span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ArrayList</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.elementData = DEFAULTCAPACITY_EMPTY_ELEMENTDATA;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>2、 指定容量的有参构造</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">   </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ArrayList</span><span class="params">(<span class="keyword">int</span> initialCapacity)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (initialCapacity &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">this</span>.elementData = <span class="keyword">new</span> Object[initialCapacity];</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (initialCapacity == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">this</span>.elementData = EMPTY_ELEMENTDATA;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Illegal Capacity: "</span>+</span><br><span class="line">                                               initialCapacity);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>3、构造一个包含指定 collection 的元素的列表，这些元素是按照该 collection 的迭代器返回它们的顺序排列的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 如果collection为空则会抛出异常。</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ArrayList</span><span class="params">(Collection&lt;? extends E&gt; c)</span> </span>&#123;</span><br><span class="line">        elementData = c.toArray();</span><br><span class="line">        <span class="keyword">if</span> ((size = elementData.length) != <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="comment">// defend against c.toArray (incorrectly) not returning Object[]</span></span><br><span class="line">            <span class="comment">// (see e.g. https://bugs.openjdk.java.net/browse/JDK-6260652)</span></span><br><span class="line">            <span class="keyword">if</span> (elementData.getClass() != Object[]<span class="class">.<span class="keyword">class</span>)</span></span><br><span class="line"><span class="class">                <span class="title">elementData</span> </span>= Arrays.copyOf(elementData, size, Object[]<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// replace with empty array.</span></span><br><span class="line">            <span class="keyword">this</span>.elementData = EMPTY_ELEMENTDATA;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>核心方法</p>
+<ul>
+<li><code>add(E e)</code></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">add</span><span class="params">(E e)</span> </span>&#123;</span><br><span class="line">        modCount++;</span><br><span class="line">    	<span class="comment">//调用私有方法</span></span><br><span class="line">        add(e, elementData, size);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(E e, Object[] elementData, <span class="keyword">int</span> s)</span> </span>&#123;</span><br><span class="line">    	<span class="comment">//首先进行扩容</span></span><br><span class="line">        <span class="keyword">if</span> (s == elementData.length)</span><br><span class="line">            elementData = grow();</span><br><span class="line">    	<span class="comment">//本质就是为数组赋值</span></span><br><span class="line">        elementData[s] = e;</span><br><span class="line">        size = s + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
 </li>
 </ul>
 
@@ -524,7 +549,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -535,7 +560,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -584,7 +609,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#java容器"><span class="nav-number">1.</span> <span class="nav-text">java容器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#框架图"><span class="nav-number">1.1.</span> <span class="nav-text">框架图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Collection-和Map对比"><span class="nav-number">1.2.</span> <span class="nav-text">Collection 和Map对比</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#java容器"><span class="nav-number">1.</span> <span class="nav-text">java容器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#框架图"><span class="nav-number">1.1.</span> <span class="nav-text">框架图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Collection-和Map对比"><span class="nav-number">1.2.</span> <span class="nav-text">Collection 和Map对比</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ArrayList源码分析"><span class="nav-number">1.3.</span> <span class="nav-text">ArrayList源码分析</span></a></li></ol></li></ol></div>
             
 
           </div>
