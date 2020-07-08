@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Spring Boot," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Spring Boot 整合JPA 什么是JPA JPA顾名思义就是Java Persistence API的意思，是JDK 5.0注解或XML描述对象－关系表的映射关系，并将运行期的实体对象持久化到数据库中。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringBoot整合JPA">
+<meta property="og:url" content="http://yoursite.com/2020/07/08/SpringBoot-%E6%95%B4%E5%90%88JPA/index.html">
+<meta property="og:site_name" content="lxtaooo">
+<meta property="og:description" content="Spring Boot 整合JPA 什么是JPA JPA顾名思义就是Java Persistence API的意思，是JDK 5.0注解或XML描述对象－关系表的映射关系，并将运行期的实体对象持久化到数据库中。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lxtaooo-1300518426.cos.ap-beijing.myqcloud.com/1505096566353.jpg">
+<meta property="article:published_time" content="2020-07-08T01:22:27.633Z">
+<meta property="article:modified_time" content="2020-07-08T02:12:46.148Z">
+<meta property="article:author" content="lxtaooo">
+<meta property="article:tag" content="Spring Boot">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lxtaooo-1300518426.cos.ap-beijing.myqcloud.com/1505096566353.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/07/08/SpringBoot-整合JPA/"/>
+
+
+
+
+
+  <title>SpringBoot整合JPA | lxtaooo</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">lxtaooo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">越努力，越幸运</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/08/SpringBoot-%E6%95%B4%E5%90%88JPA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="lxtaooo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://lxtaooo-1300518426.cos.ap-beijing.myqcloud.com/1.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="lxtaooo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">SpringBoot整合JPA</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-07-08T09:22:27+08:00">
+                2020-07-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Spring-Boot/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring Boot</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<h3 id="Spring-Boot-整合JPA"><a href="#Spring-Boot-整合JPA" class="headerlink" title="Spring Boot 整合JPA"></a>Spring Boot 整合JPA</h3></blockquote>
+<h4 id="什么是JPA"><a href="#什么是JPA" class="headerlink" title="什么是JPA"></a>什么是JPA</h4><ul>
+<li>JPA顾名思义就是Java Persistence API的意思，是JDK 5.0注解或XML描述对象－关系表的映射关系，并将运行期的实体对象持久化到数据库中。</li>
+</ul>
+<p><img src="https://lxtaooo-1300518426.cos.ap-beijing.myqcloud.com/1505096566353.jpg" alt></p>
+<a id="more"></a>
+
+<h4 id="JPA注解实现"><a href="#JPA注解实现" class="headerlink" title="JPA注解实现"></a>JPA注解实现</h4><table>
+<thead>
+<tr>
+<th align="center">@Entity</th>
+<th align="center">声明类为实体或表。</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">@Entity</td>
+<td align="center">声明类为实体或表。</td>
+</tr>
+<tr>
+<td align="center">@Table</td>
+<td align="center">声明表名。</td>
+</tr>
+<tr>
+<td align="center">@Id</td>
+<td align="center">指定的类的属性，用于识别（一个表中的主键）。</td>
+</tr>
+<tr>
+<td align="center">@GeneratedValue</td>
+<td align="center">指定如何标识属性可以被初始化，例如自动、手动、或从序列表中获得的值</td>
+</tr>
+<tr>
+<td align="center">@Transient</td>
+<td align="center">指定的属性，它是不持久的，即：该值永远不会存储在数据库中。</td>
+</tr>
+<tr>
+<td align="center">@Column</td>
+<td align="center">指定持久属性栏属性（即数据库中字段名）</td>
+</tr>
+<tr>
+<td align="center">@JoinColumn</td>
+<td align="center">指定一个实体组织或实体的集合。这是用在多对一和一对多关联。</td>
+</tr>
+<tr>
+<td align="center">@ManyToMany</td>
+<td align="center">定义了连接表之间的多对多的关系。</td>
+</tr>
+<tr>
+<td align="center">@ManyToOne</td>
+<td align="center">定义了连接表之间的多对一的关系。</td>
+</tr>
+<tr>
+<td align="center">@OneToMany</td>
+<td align="center">定义了连接表之间的一对多的关系。</td>
+</tr>
+</tbody></table>
+<h4 id="实现测试"><a href="#实现测试" class="headerlink" title="实现测试"></a>实现测试</h4><h5 id="添加依赖"><a href="#添加依赖" class="headerlink" title="添加依赖"></a>添加依赖</h5><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-data-jpa<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="application-properties配置JPA"><a href="#application-properties配置JPA" class="headerlink" title="application-properties配置JPA"></a>application-properties配置JPA</h5><figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#配置连接数据库</span></span><br><span class="line"><span class="meta">server.port</span> = <span class="string">8080</span></span><br><span class="line"><span class="meta">spring.datasource.driver-class-name</span>=<span class="string">com.mysql.jdbc.Driver</span></span><br><span class="line"><span class="meta">spring.datasource.url</span>=<span class="string">jdbc:mysql://127.0.0.1:3306/****?useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false&amp;serverTimezone=Asia/Shanghai</span></span><br><span class="line"><span class="meta">spring.datasource.username</span>=<span class="string">root</span></span><br><span class="line"><span class="meta">spring.datasource.password</span>=<span class="string">？？？？</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#配置jpa中ddl语句，第一次设为create即为创建新表，以后设为update为更新表</span></span><br><span class="line"><span class="meta">spring.jpa.properties.hibernate.nbm2ddl.auto</span>=<span class="string">update</span></span><br><span class="line"><span class="comment">#配置jpa使用mysql方言</span></span><br><span class="line"><span class="meta">spring.jpa.properties.hibernate.dialect</span>=<span class="string">org.hibernate.dialect.MySQL5InnoDBDialect</span></span><br><span class="line"><span class="comment">#配置jpa 格式化sql语句 并在控制台打印sql语句</span></span><br><span class="line"><span class="meta">spring.jpa.properties.hibernate.format_sql</span>=<span class="string">true</span></span><br><span class="line"><span class="meta">spring.jpa.show-sql</span>=<span class="string">true</span></span><br><span class="line"><span class="comment">#配置jpa命名策略，默认开启驼峰命名，下面是采用映射成真实的数据名称的处理</span></span><br><span class="line"><span class="meta">spring.jpa.hibernate.naming.physical-strategy</span>=<span class="string">org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="编写实体类"><a href="#编写实体类" class="headerlink" title="编写实体类"></a>编写实体类</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> lombok.Data;</span><br><span class="line"><span class="keyword">import</span> lombok.experimental.Tolerate;</span><br><span class="line"><span class="keyword">import</span> javax.persistence.*;</span><br><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="meta">@Table</span>(name=<span class="string">"sys_user"</span>)</span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Id</span></span><br><span class="line">    <span class="meta">@GeneratedValue</span>(strategy = GenerationType.IDENTITY)</span><br><span class="line">    <span class="meta">@Column</span>(name = <span class="string">"id"</span>)</span><br><span class="line">    <span class="keyword">private</span> Integer id;</span><br><span class="line">    <span class="meta">@Column</span>(name = <span class="string">"nickname"</span>)</span><br><span class="line">    <span class="keyword">private</span> String nickname;</span><br><span class="line">    <span class="meta">@Column</span>(name = <span class="string">"username"</span>)</span><br><span class="line">    <span class="keyword">private</span> String username;</span><br><span class="line">    <span class="meta">@Column</span>(name = <span class="string">"password"</span>)</span><br><span class="line">    <span class="keyword">private</span> String password;</span><br><span class="line">    <span class="meta">@Column</span>(name = <span class="string">"sex"</span>)</span><br><span class="line">    <span class="keyword">private</span> String sex;</span><br><span class="line">    <span class="meta">@Column</span>(name = <span class="string">"phone"</span>)</span><br><span class="line">    <span class="keyword">private</span> String phone;</span><br><span class="line">    <span class="meta">@Column</span>(name = <span class="string">"status"</span>)</span><br><span class="line">    <span class="keyword">private</span> Integer status;</span><br><span class="line">    <span class="meta">@Column</span>(name = <span class="string">"createTime"</span>)</span><br><span class="line">    <span class="keyword">private</span> Date createTime;</span><br><span class="line">    <span class="meta">@Column</span>(name = <span class="string">"updateTime"</span>)</span><br><span class="line">    <span class="keyword">private</span> Date updateTime;</span><br><span class="line">    <span class="meta">@ManyToOne</span>  <span class="comment">//外键关联另一张表</span></span><br><span class="line">    <span class="meta">@JoinColumn</span>(name = <span class="string">"organizationId"</span>,referencedColumnName = <span class="string">"id"</span>)</span><br><span class="line">    <span class="keyword">private</span> Organization organization;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"User&#123;"</span> +</span><br><span class="line">                <span class="string">"id="</span> + id +</span><br><span class="line">                <span class="string">", nickname='"</span> + nickname + <span class="string">'\''</span> +</span><br><span class="line">                <span class="string">", username='"</span> + username + <span class="string">'\''</span> +</span><br><span class="line">                <span class="string">", password='"</span> + password + <span class="string">'\''</span> +</span><br><span class="line">                <span class="string">", sex='"</span> + sex + <span class="string">'\''</span> +</span><br><span class="line">                <span class="string">", phone='"</span> + phone + <span class="string">'\''</span> +</span><br><span class="line">                <span class="string">", status="</span> + status +</span><br><span class="line">                <span class="string">", createTime="</span> + createTime +</span><br><span class="line">                <span class="string">", updateTime="</span> + updateTime +</span><br><span class="line">                <span class="string">'&#125;'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="编写持久化层"><a href="#编写持久化层" class="headerlink" title="编写持久化层"></a>编写持久化层</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserDao</span> <span class="keyword">extends</span> <span class="title">JpaRepository</span>&lt;<span class="title">User</span>,<span class="title">Integer</span>&gt;</span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>继承<code>JpaRepository</code>类可以为我们自动实现简单查询方法，调用时注意方法规范书写。</p>
+<h5 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.fasterxml.jackson.databind.ObjectMapper;</span><br><span class="line"><span class="keyword">import</span> com.lixiaotao.jpa.dao.OrganizationDao;</span><br><span class="line"><span class="keyword">import</span> com.lixiaotao.jpa.dao.UserDao;</span><br><span class="line"><span class="keyword">import</span> com.lixiaotao.jpa.model.Organization;</span><br><span class="line"><span class="keyword">import</span> com.lixiaotao.jpa.model.User;</span><br><span class="line"><span class="keyword">import</span> com.lixiaotao.jpa.model.UserOrganizationDto;</span><br><span class="line"><span class="keyword">import</span> org.junit.jupiter.api.Test;</span><br><span class="line"><span class="keyword">import</span> org.objenesis.ObjenesisBase;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.test.context.SpringBootTest;</span><br><span class="line"><span class="keyword">import</span> org.springframework.util.ObjectUtils;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.Optional;</span><br><span class="line"></span><br><span class="line"><span class="meta">@SpringBootTest</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">JpaApplicationTests</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> UserDao userDao;</span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">contextLoads</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">        Optional&lt;User&gt; user = userDao.findById(<span class="number">1</span>);</span><br><span class="line">        System.out.println(user.toString());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;&#x2F; ###################### 控制台输出################</span><br><span class="line">Hibernate: </span><br><span class="line">    select</span><br><span class="line">        user0_.id as id1_1_0_,</span><br><span class="line">        user0_.createTime as createti2_1_0_,</span><br><span class="line">        user0_.nickname as nickname3_1_0_,</span><br><span class="line">        user0_.organizationId as organiz10_1_0_,</span><br><span class="line">        user0_.password as password4_1_0_,</span><br><span class="line">        user0_.phone as phone5_1_0_,</span><br><span class="line">        user0_.sex as sex6_1_0_,</span><br><span class="line">        user0_.status as status7_1_0_,</span><br><span class="line">        user0_.updateTime as updateti8_1_0_,</span><br><span class="line">        user0_.username as username9_1_0_,</span><br><span class="line">        organizati1_.id as id1_0_1_,    &#x2F;&#x2F;&#x2F; 因为我们在实体类中设置了@ManyToone</span><br><span class="line">        organizati1_.organizationDes as organiza2_0_1_, &#x2F;&#x2F;&#x2F; 所以查询时自动关联查询了另一张表</span><br><span class="line">        organizati1_.organizationName as organiza3_0_1_ </span><br><span class="line">    from</span><br><span class="line">        sys_user user0_ </span><br><span class="line">    left outer join</span><br><span class="line">        sys_organization organizati1_ </span><br><span class="line">            on user0_.organizationId&#x3D;organizati1_.id </span><br><span class="line">    where</span><br><span class="line">        user0_.id&#x3D;?</span><br><span class="line">Optional[User&#123;id&#x3D;1, nickname&#x3D;&#39;lxt&#39;, username&#x3D;&#39;lxtaooo&#39;, password&#x3D;&#39;123&#39;, sex&#x3D;&#39;man&#39;, phone&#x3D;&#39;123&#39;, status&#x3D;1, createTime&#x3D;2020-06-19 15:33:45.0, updateTime&#x3D;2020-06-30 11:28:40.0&#125;]</span><br></pre></td></tr></table></figure>
+
+<p>可见使用<code>JpaRepository</code>类中自定义的方法也可以实现简单查询，还有其他很多方法可以自己去试试啊~</p>
+<h4 id="返回多表查询数据"><a href="#返回多表查询数据" class="headerlink" title="返回多表查询数据"></a>返回多表查询数据</h4><p>在复杂查询环境下，往往需要我们同时查询多张表中的内容，使用JPA实现也是非常的方便。</p>
+<ul>
+<li>我们要做的：通过用户id查询用户信息和用户单位信息</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//持久层添加新方法 不同于sql语句的书写我们可以通过类直接映射到表</span></span><br><span class="line"><span class="meta">@Query</span>(<span class="string">"select user,organization from User user,Organization organization where user.id =:id and user.organization.id = organization.id"</span>)</span><br><span class="line"><span class="function">Object <span class="title">findByUserId</span><span class="params">(@Param(<span class="string">"id"</span>)</span> Integer id)</span>;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">contextLoads</span><span class="params">()</span> </span>&#123;</span><br><span class="line">   Object obj=<span class="keyword">this</span>.userDao.findByUserId(<span class="number">1</span>);</span><br><span class="line">   Object[] objs = (Object[]) obj;</span><br><span class="line">   <span class="keyword">for</span>(Object a:objs)&#123;</span><br><span class="line">      System.out.println(a.toString());</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">Hibernate: </span><br><span class="line">    select</span><br><span class="line">        user0_.id as id1_1_0_,</span><br><span class="line">        organizati1_.id as id1_0_1_,</span><br><span class="line">        user0_.createTime as createti2_1_0_,</span><br><span class="line">        user0_.nickname as nickname3_1_0_,</span><br><span class="line">        user0_.organizationId as organiz10_1_0_,</span><br><span class="line">        user0_.password as password4_1_0_,</span><br><span class="line">        user0_.phone as phone5_1_0_,</span><br><span class="line">        user0_.sex as sex6_1_0_,</span><br><span class="line">        user0_.status as status7_1_0_,</span><br><span class="line">        user0_.updateTime as updateti8_1_0_,</span><br><span class="line">        user0_.username as username9_1_0_,</span><br><span class="line">        organizati1_.organizationDes as organiza2_0_1_,</span><br><span class="line">        organizati1_.organizationName as organiza3_0_1_ </span><br><span class="line">    from</span><br><span class="line">        sys_user user0_ cross </span><br><span class="line">    join</span><br><span class="line">        sys_organization organizati1_ </span><br><span class="line">    where</span><br><span class="line">        user0_.id&#x3D;? </span><br><span class="line">        and user0_.organizationId&#x3D;organizati1_.id</span><br><span class="line">User&#123;id&#x3D;1, nickname&#x3D;&#39;lxt&#39;, username&#x3D;&#39;lxtaooo&#39;, password&#x3D;&#39;123&#39;, sex&#x3D;&#39;man&#39;, phone&#x3D;&#39;123&#39;, status&#x3D;1, createTime&#x3D;2020-06-19 15:33:45.0, updateTime&#x3D;2020-06-30 11:28:40.0&#125;</span><br><span class="line">Organization(id&#x3D;1, organizationName&#x3D;单位, organizationDes&#x3D;是是是是)</span><br></pre></td></tr></table></figure>
+
+<p>实际开发过程中我们是需要新建一个VO类来接收查询到的数据，在这里就不在介绍了。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Spring-Boot/" rel="tag"># Spring Boot</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/07/03/SpringBoot-%E7%BB%9F%E4%B8%80%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/" rel="next" title="SpringBoot 统一异常处理">
+                <i class="fa fa-chevron-left"></i> SpringBoot 统一异常处理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://lxtaooo-1300518426.cos.ap-beijing.myqcloud.com/1.jpeg"
+                alt="lxtaooo" />
+            
+              <p class="site-author-name" itemprop="name">lxtaooo</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives%7C%7C%20%20archive">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/lxtaooo" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:lxtaooo@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring-Boot-整合JPA"><span class="nav-number">1.</span> <span class="nav-text">Spring Boot 整合JPA</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#什么是JPA"><span class="nav-number">1.1.</span> <span class="nav-text">什么是JPA</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JPA注解实现"><span class="nav-number">1.2.</span> <span class="nav-text">JPA注解实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实现测试"><span class="nav-number">1.3.</span> <span class="nav-text">实现测试</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#添加依赖"><span class="nav-number">1.3.1.</span> <span class="nav-text">添加依赖</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#application-properties配置JPA"><span class="nav-number">1.3.2.</span> <span class="nav-text">application-properties配置JPA</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#编写实体类"><span class="nav-number">1.3.3.</span> <span class="nav-text">编写实体类</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#编写持久化层"><span class="nav-number">1.3.4.</span> <span class="nav-text">编写持久化层</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#测试"><span class="nav-number">1.3.5.</span> <span class="nav-text">测试</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#返回多表查询数据"><span class="nav-number">1.4.</span> <span class="nav-text">返回多表查询数据</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2019 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lxtaooo</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
