@@ -249,6 +249,158 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/16/%E6%B7%B1%E5%85%A5%E4%BA%86%E8%A7%A3synchronized%E5%85%B3%E9%94%AE%E5%AD%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="lxtaooo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://lxtaooo-1300518426.cos.ap-beijing.myqcloud.com/1.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="lxtaooo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/07/16/%E6%B7%B1%E5%85%A5%E4%BA%86%E8%A7%A3synchronized%E5%85%B3%E9%94%AE%E5%AD%97/" itemprop="url">多线程(五)---深入了解synchronized关键字</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-07-16T09:15:11+08:00">
+                2020-07-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java%E8%BF%9B%E9%98%B6/" itemprop="url" rel="index">
+                    <span itemprop="name">java进阶</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h3 id="深入synchronized关键字"><a href="#深入synchronized关键字" class="headerlink" title="深入synchronized关键字"></a>深入synchronized关键字</h3><ul>
+<li>synchronized关键字是用来解决线程同步问题的有效手段，那么它是怎么实现的呢?</li>
+<li>自从java1.6以来，对锁的实现进行了一系列优化，引入偏向锁、轻量级锁、自旋锁，通过锁升级的方式一改以往synchronized关键字重量级的特性，</li>
+</ul>
+<blockquote>
+<p>参考链接：<a href="https://gitee.com/SnailClimb/JavaGuide/blob/master/docs/java/Multithread/synchronized.md" target="_blank" rel="noopener">https://gitee.com/SnailClimb/JavaGuide/blob/master/docs/java/Multithread/synchronized.md</a>              <a href="https://www.cnblogs.com/deveypf/p/11406932.html" target="_blank" rel="noopener">https://www.cnblogs.com/deveypf/p/11406932.html</a></p>
+</blockquote>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/07/16/%E6%B7%B1%E5%85%A5%E4%BA%86%E8%A7%A3synchronized%E5%85%B3%E9%94%AE%E5%AD%97/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/13/%E7%BD%91%E7%BB%9C%E9%9D%A2%E8%AF%95%E9%97%AE%E9%A2%98/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1400,8 +1552,8 @@
       
         
           <h3 id="synchronized关键字作用"><a href="#synchronized关键字作用" class="headerlink" title="synchronized关键字作用"></a>synchronized关键字作用</h3><ul>
-<li>保证线程安全，在同一时刻只有一个线程可以执行某个方法</li>
-<li>处理多线程中数据共享问题</li>
+<li>synchronized关键字解决的是多个线程之间访问资源的同步性</li>
+<li>synchronized关键字可以保证被它修饰<br>的⽅法或者代码块在任意时刻只能有⼀个线程执⾏。</li>
 </ul>
           <!--noindex-->
           <div class="post-button text-center">
@@ -1599,161 +1751,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/10/mysql%E8%BF%9B%E9%98%B6%E7%AC%94%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="lxtaooo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://lxtaooo-1300518426.cos.ap-beijing.myqcloud.com/1.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="lxtaooo">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/03/10/mysql%E8%BF%9B%E9%98%B6%E7%AC%94%E8%AE%B0/" itemprop="url">mysql进阶笔记</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-03-10T09:51:30+08:00">
-                2020-03-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index">
-                    <span itemprop="name">数据库</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="MySql-进阶"><a href="#MySql-进阶" class="headerlink" title="MySql 进阶"></a>MySql 进阶</h2><h3 id="Mysql架构"><a href="#Mysql架构" class="headerlink" title="Mysql架构"></a>Mysql架构</h3><h4 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h4><ul>
-<li>二进制日志 log-bin     作用：主从复制</li>
-<li>错误日志 error-bin 默认关闭，记录严重的警告和错误信息，每次启动和关闭的详细信息等</li>
-<li>查询日志log 默认关闭，记录查询的sql语句，如果开启会降低mysql的性能</li>
-</ul>
-<h4 id="逻辑架构介绍"><a href="#逻辑架构介绍" class="headerlink" title="逻辑架构介绍"></a>逻辑架构介绍</h4><ul>
-<li><img src="https://lxtaooo-1300518426.cos.ap-beijing.myqcloud.com/image-20200310102624181.png" alt="image-20200310102624181"></li>
-<li>包含模块：连接池、sql接口、解析器、优化器、缓存、存储引擎（innodb、myiSAM）</li>
-<li>连接层、服务层、引擎层、存储层</li>
-</ul>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2020/03/10/mysql%E8%BF%9B%E9%98%B6%E7%AC%94%E8%AE%B0/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1808,7 +1805,7 @@
               
                 <a href="/archives%7C%7C%20%20archive">
               
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1830,7 +1827,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
